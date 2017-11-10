@@ -1,6 +1,5 @@
 var socket = io();
 
-
 function scrollToBottom () {
     // Selectors
     var messages = jQuery('#messages');
@@ -33,6 +32,16 @@ socket.on('connect', function () {
 
 socket.on('disconnect', function () {
     console.log('Disconnected from server');
+});
+
+socket.on('updateUserList', function (users) {
+    var ol = jQuery('<ol></ol>');
+
+    users.forEach(function (user) {
+        ol.append(jQuery('<li></li>').text(user));
+    });
+
+    jQuery('#users').html(ol);
 });
 
 socket.on('newMessage', function (message) {
